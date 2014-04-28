@@ -109,7 +109,7 @@ class MainWindow(wx.Frame):
         self.buttons2 = wx.Button(self.panelButton, 2, 'Add blacklist', (-1,-1))
         self.buttons3 = wx.Button(self.panelButton, 3, 'Quit', (-1,-1))
         self.labelDynamic = wx.StaticText(self.panelText, 1, "Choose action", style = wx.ALIGN_LEFT, size = (-1,-1))
-        self.labelFixe = wx.StaticText(self.panelText, 2, PROGRAM_NAME + " GPL", style = wx.ALIGN_LEFT, size = (-1,-1))
+        self.labelFixe = wx.StaticText(self.panelText, 1, PROGRAM_NAME + " GPL", style = wx.ALIGN_LEFT, size = (-1,-1))
         self.gridSizer.Add(self.gridSizerButton, 0, wx.ALIGN_CENTRE)
         self.gridSizer.Add(self.gridSizerText, 0, wx.ALIGN_CENTRE)
         self.gridSizerButton.Add(self.buttons1, 0, wx.ALIGN_LEFT)
