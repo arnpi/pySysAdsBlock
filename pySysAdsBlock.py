@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 #
-#  pyWxDenyAll.py
+#  pySysAdsBlock.py
 #
 #  07/27/2013
 #  Copyright 2013 arnpi <arnpi@gmx.com>
@@ -44,7 +44,7 @@ from wx.lib.embeddedimage import PyEmbeddedImage
 import base64
 
 VERSION = '0.2'
-PROGRAM_NAME = "pyWxDenyAll " + VERSION
+PROGRAM_NAME = "pySysAdsBlock " + VERSION
 PROVIDER = ["http://someonewhocares.org/hosts/hosts"]
 PING_SITE = "google.com"
 DEFAULT_PROVIDER = 0
