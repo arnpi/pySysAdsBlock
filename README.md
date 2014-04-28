@@ -1,7 +1,7 @@
 pySysAdsBlock
 ===========
 
-System ads block
+*System ads block*
 
 Needs root user
 
