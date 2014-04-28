@@ -9,5 +9,7 @@ http://www.wxpython.org/download.php
 debian install
 
 as root:
+
 apt-get install python-wxgtk2.8
+
 python pySysAdsBlock.py
