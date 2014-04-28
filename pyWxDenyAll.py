@@ -198,6 +198,9 @@ class MainWindow(wx.Frame):
         if systemEnv["sys"] == "Linux":
             config["etcHost"]  = "/etc/hosts"
             config["cmdPing"]  = "ping -c 1 " + PING_SITE
+        elif systemEnv["sys"] == "Windows":
+            config["etcHost"]  = "C:\WINDOWS\system32\drivers\etc\hosts"
+            config["cmdPing"]  = "ping " + PING_SITE
         else:
             print "Only linux for the moment ..."
             showerror('Not implemented', 'Only linux for the moment ...')
@@ -208,6 +211,7 @@ class MainWindow(wx.Frame):
         config["sysBckpHosts"] = config["etcHost"] + ".original"
         for el in config:
             print el + " = " + config[el]
+        #exit()
         return config
 
     def test_connect(self):
@@ -262,9 +266,10 @@ class MainWindow(wx.Frame):
         """
         print "fetch_hosts()"
         print "Downloading updated hosts file"
-        req = urllib2.Request(provider)
+        req = urllib2.Request(provider, headers={ 'User-Agent': 'Mozilla/5.0' } )
         try:
-            hostsPage = urllib2.urlopen(req)
+            headers = { 'User-Agent' : 'Mozilla/5.0' }
+            hostsPage = urllib2.urlopen(req,timeout=100)
             hostsPage = hostsPage.read()
             hostsPage = hostsPage.split("\n")
             return hostsPage
