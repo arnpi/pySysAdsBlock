@@ -3,8 +3,9 @@
 import settings
 
 import sysAdsBlock
-import interface
+import interfaceWx
+
 from wx.lib.embeddedimage import PyEmbeddedImage
-app = interface.wx.App(False)
-frame = interface.MainWindow(None, settings.PROGRAM_NAME)
+app = interfaceWx.wx.App(False)
+frame = interfaceWx.MainWindow(None, settings.PROGRAM_NAME)
 app.MainLoop()
