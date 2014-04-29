@@ -29,11 +29,12 @@ from wx.lib.embeddedimage import PyEmbeddedImage
 import base64
 import time
 import os
-import config
+
+import settings
 import sysAdsBlock
 class MainWindow(wx.Frame):
     def __init__(self, parent, title):
-        sab = sysadsblock()
+        self.sab = sysAdsBlock.Sysadsblock()
         wx.Frame.__init__(self, parent, title=title, size=(400,300))
         self.frameSizer = wx.BoxSizer(wx.VERTICAL)
         self.gridSizer = wx.GridSizer(5, 2, 0, 0)
@@ -72,11 +73,10 @@ class MainWindow(wx.Frame):
         #self.SetSizeHints(self.GetSize().x,self.GetSize().y,self.GetSize().x,self.GetSize().y );
         print "Icone systray"
         self.icoSystray = wx.TaskBarIcon()
-        self.SetIcon(ICON.GetIcon())
-        self.icoSystray.SetIcon(ICON.GetIcon())
+        self.SetIcon(settings.ICON.GetIcon())
+        self.icoSystray.SetIcon(settings.ICON.GetIcon())
         self.icoSystray.Bind(wx.EVT_TASKBAR_LEFT_DOWN, self.on_left_down)
         self.icoSystray.Bind(wx.EVT_TASKBAR_RIGHT_DOWN, self.on_right_down)
-        self.hideStatut = True
         self.icoSystraymenu=wx.Menu()
         self.icoSystraymenu.Append(wx.ID_EXIT, "Close")
         self.icoSystraymenu.Append(1, "Remove blacklist")
@@ -85,7 +85,9 @@ class MainWindow(wx.Frame):
         self.icoSystraymenu.Bind(wx.EVT_MENU, self.yes_ads, id=1)
         self.icoSystraymenu.Bind(wx.EVT_MENU, self.no_ads, id=2)
         
-        #self.Show()
+        #self.hideStatut = True
+        self.hideStatut = False
+        self.Show()
         self.Bind(wx.EVT_CLOSE, self.on_close)
         
     def on_close(self, event):
@@ -106,7 +108,7 @@ class MainWindow(wx.Frame):
             self.hideStatut = False
         
     def visit(self):
-        print "visiting ", PROVIDER
+        print "visiting ", settings.PROVIDER
 
 
     def close_app(self, event):
@@ -114,17 +116,38 @@ class MainWindow(wx.Frame):
         exit()
 
     def printCountLines(self):
-        lastModification = time.ctime(os.stat(self.config["etcHost"]).st_mtime)
+        lastModification = time.ctime(os.stat(self.sab.config["etcHost"]).st_mtime)
         #lastModification = time.strptime(lastModification, "%a %b %d %H:%M:%S %Y")
         #lastModification = time.strftime("%Y%m%d-%H%M%S", lastModification) 
-        txtCount = "Actually the "  +  sab.config["etcHost"] + " file contains " + str(countLine(sab.config["etcHost"])) + " lines.\n" + lastModification
+        txtCount = "Actually the "  +  self.sab.config["etcHost"] + " file contains " + str(self.sab.countLine(self.sab.config["etcHost"])) + " lines.\n" + lastModification
         return txtCount
         
     def Quit(self, event):
         exit()
         
-    def yes_ads():
+    def yes_ads(self, event):
         print "yesads"
+        self.txtStatusBar.SetStatusText(u"Reinit hosts file ...")
+        resultYes = self.sab.yes_ads()
+        if resultYes == 1:
+            self.txtStatusBar.SetStatusText(u"Hosts restored !")
+        else:
+            self.txtStatusBar.SetStatusText(u"Error not restored !")
+        self.labelDynamic.SetLabel(self.printCountLines())
         
-    def no_ads():
+    def no_ads(self, event):
         print "noads"
+        self.labelDynamic.SetLabel( "Please wait ...")
+        self.txtStatusBar.SetStatusText(u"Dl from " + settings.PROVIDER[settings.DEFAULT_PROVIDER] + " ...")
+        resultNo = self.sab.no_ads()
+        if resultNo == 1:
+            self.txtStatusBar.SetStatusText(u"Blacklist added !")
+        elif resultNo ==2:
+            self.txtStatusBar.SetStatusText(u"Error while dowloading !")
+        elif resultNo ==0:
+            self.txtStatusBar.SetStatusText(u"Network error")
+        else:
+            self.txtStatusBar.SetStatusText(u"WTF ??")
+        self.labelDynamic.SetLabel(self.printCountLines())
+            
+
