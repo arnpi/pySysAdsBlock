@@ -96,7 +96,7 @@ class MainWindow(wx.Frame):
             else:
                 print "installing error"
                 exit()
-        wx.Frame.__init__(self, parent, title=title, size=(-1,-1))
+        wx.Frame.__init__(self, parent, title=title, size=(400,300))
         self.frameSizer = wx.BoxSizer(wx.VERTICAL)
         self.gridSizer = wx.GridSizer(5, 2, 0, 0)
         self.gridSizerButton = wx.GridSizer(1, 3, 0, 0)
@@ -131,7 +131,7 @@ class MainWindow(wx.Frame):
         self.SetSizer(self.frameSizer)
         self.frameSizer.SetSizeHints(self)
         self.labelDynamic.SetLabel(self.printCountLines())
-        self.SetSizeHints(self.GetSize().x,self.GetSize().y,self.GetSize().x,self.GetSize().y );
+        #self.SetSizeHints(self.GetSize().x,self.GetSize().y,self.GetSize().x,self.GetSize().y );
         print "Icone systray"
         self.icoSystray = wx.TaskBarIcon()
         self.SetIcon(ICON.GetIcon())
