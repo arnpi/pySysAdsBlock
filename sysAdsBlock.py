@@ -24,26 +24,26 @@ class Sysadsblock():
     def __init__(self):
         self.config = self.configuration(self.detect_os())
         if self.check_install():
-            print "Install OK"
+            if settings.DEBUG : print "Install OK"
         else:
             if self.installer():
-                print "Installing ..."
+                if settings.DEBUG : print "Installing ..."
             else:
-                print "installing error"
+                if settings.DEBUG : print "installing error"
                 exit()
     def detect_os(self):
         """
         detect os to know correct path, ect.
         Return array
         """
-        print "detect_os()"
+        if settings.DEBUG : print "detect_os()"
         systemEnv = {}
         systemEnv["sys"] = platform.system()
         systemEnv["release"] = platform.release()
         systemEnv["os"] = os.name
         systemEnv["arch"] = platform.architecture()[0]
         for el in systemEnv:
-            print el + " = " + systemEnv[el]
+            if settings.DEBUG : print el + " = " + systemEnv[el]
         return systemEnv
 
     def configuration(self,systemEnv):
@@ -51,7 +51,7 @@ class Sysadsblock():
         Generate personnal config with systemEnv from detect_os
         Return array
         """
-        print "config()"
+        if settings.DEBUG : print "config()"
         config = {}
         # user path
         config["userPath"] = os.path.expanduser ("~")
@@ -63,7 +63,7 @@ class Sysadsblock():
             config["etcHost"]  = "C:\WINDOWS\system32\drivers\etc\hosts"
             config["cmdPing"]  = "ping " + settings.PING_SITE
         else:
-            print "Only linux for the moment ..."
+            if settings.DEBUG : print "Only linux for the moment ..."
             showerror('Not implemented', 'Only linux for the moment ...')
             exit()
         # hosts file build by the app
@@ -71,7 +71,7 @@ class Sysadsblock():
         # backup of user hosts file
         config["sysBckpHosts"] = config["etcHost"] + ".original"
         for el in config:
-            print el + " = " + config[el]
+            if settings.DEBUG : print el + " = " + config[el]
         #exit()
         return config
 
@@ -80,7 +80,7 @@ class Sysadsblock():
         Internet ping,
         Return Bool
         """
-        print "test_connect()"
+        if settings.DEBUG : print "test_connect()"
         if os.system(self.config["cmdPing"]):
             return False
         else:
@@ -90,7 +90,7 @@ class Sysadsblock():
         """
         Check if user hosts file is backup
         """
-        print "check_install()"
+        if settings.DEBUG : print "check_install()"
         if (os.path.isfile(self.config["sysBckpHosts"]) == True):
             return True
         else:
@@ -101,7 +101,7 @@ class Sysadsblock():
         Create backup files
         Return Bool
         """
-        print "installer()"
+        if settings.DEBUG : print "installer()"
         shutil.copyfile(self.config["etcHost"], self.config["sysBckpHosts"])
         if self.check_install():
             return True
@@ -113,7 +113,7 @@ class Sysadsblock():
         Clear old app hosts file, create a new one
         Return Bool
         """
-        print "reinit()"
+        if settings.DEBUG : print "reinit()"
         if (os.path.isfile(self.config["appHosts"]) == True):
             os.remove(self.config["appHosts"])
             return True
@@ -125,8 +125,8 @@ class Sysadsblock():
         fetch blacklist hosts file update,
         Return array
         """
-        print "fetch_hosts()"
-        print "Downloading updated hosts file"
+        if settings.DEBUG : print "fetch_hosts()"
+        if settings.DEBUG : print "Downloading updated hosts file"
         req = urllib2.Request(provider, headers={ 'User-Agent': 'Mozilla/5.0' } )
         try:
             headers = { 'User-Agent' : 'Mozilla/5.0' }
@@ -135,7 +135,7 @@ class Sysadsblock():
             hostsPage = hostsPage.split("\n")
             return hostsPage
         except urllib2.URLError, e:
-            print "error"
+            if settings.DEBUG : print "error"
             return 0
         
 
@@ -144,7 +144,7 @@ class Sysadsblock():
         Build the hosts file
         hostsPage is array
         """
-        print "build_app_hosts()"
+        if settings.DEBUG : print "build_app_hosts()"
         baseHostsFile = open(self.config["etcHost"], "r")
         baseHostsFile = baseHostsFile.read()
         baseHostsFile = baseHostsFile.split("\n")
@@ -153,11 +153,11 @@ class Sysadsblock():
             if '# - - - S T O P - E D I T - H E R E - - - #' in lineHostsFile:
                 break
             else:
-                print lineHostsFile
+                if settings.DEBUG : print lineHostsFile
                 baseHostsArray.append(lineHostsFile)   
-        print "break"   
+        if settings.DEBUG : print "break"   
         hostsFile = open(self.config["appHosts"], "w")
-        print "Writing ..."
+        if settings.DEBUG : print "Writing ..."
         regexIpLocal = re.compile('^127.0.0.1',re.I)
         regexComment = re.compile('^#',re.I)
         for el in baseHostsArray:
@@ -182,31 +182,31 @@ class Sysadsblock():
         hostsFile.write("# ----------------------------------------------------------\n\n")
         hostsFile.close()
         shutil.copyfile(self.config["appHosts"], self.config["etcHost"])
-        print "OK"     
-        #print self.printCountLines()
-        #self.labelDynamic = wx.StaticText(self.panelButton, 1, self.printCountLines(), style = wx.ALIGN_CENTRE)
+        if settings.DEBUG : print "OK"     
+        #if settings.DEBUG : print self.if settings.DEBUG : printCountLines()
+        #self.labelDynamic = wx.StaticText(self.panelButton, 1, self.if settings.DEBUG : printCountLines(), style = wx.ALIGN_CENTRE)
         return 0
 
     def no_ads(self):
-        print "no_ads()"
+        if settings.DEBUG : print "no_ads()"
         if self.test_connect() == False:
-            print "Network error"
+            if settings.DEBUG : print "Network error"
             return 0
         else:
-            print "Network OK"
+            if settings.DEBUG : print "Network OK"
             self.reinit()
-            print "Dl from " + settings.PROVIDER[settings.DEFAULT_PROVIDER] + " ..."
+            if settings.DEBUG : print "Dl from " + settings.PROVIDER[settings.DEFAULT_PROVIDER] + " ..."
             hostsPage = self.fetch_hosts(settings.PROVIDER[settings.DEFAULT_PROVIDER])
             if (hostsPage != 0):
                 self.build_app_hosts(hostsPage)
-                print "Done !"
+                if settings.DEBUG : print "Done !"
                 return 1
             else:
-                print "Error while dowloading !"
+                if settings.DEBUG : print "Error while dowloading !"
                 return 2
 
     def yes_ads(self):
-        print "yes_ads()"
+        if settings.DEBUG : print "yes_ads()"
         baseHostsFile = open(self.config["etcHost"], "r")
         baseHostsFile = baseHostsFile.read()
         baseHostsFile = baseHostsFile.split("\n")
@@ -215,11 +215,11 @@ class Sysadsblock():
             if '# - - - S T O P - E D I T - H E R E - - - #' in lineHostsFile:
                 break
             else:
-                print lineHostsFile
+                if settings.DEBUG : print lineHostsFile
                 baseHostsArray.append(lineHostsFile)   
-        print "break"   
+        if settings.DEBUG : print "break"   
         hostsFile = open(self.config["appHosts"], "w")
-        print "Writing ..."
+        if settings.DEBUG : print "Writing ..."
         regexIpLocal = re.compile('^127.0.0.1',re.I)
         regexComment = re.compile('^#',re.I)
         for el in baseHostsArray:
@@ -227,8 +227,8 @@ class Sysadsblock():
                 hostsFile.write(el + "\n")
         hostsFile.close()
         shutil.copyfile(self.config["appHosts"], self.config["etcHost"])
-        #print self.printCountLines()
-        print "Hosts restored !"
+        #if settings.DEBUG : print self.if settings.DEBUG : printCountLines()
+        if settings.DEBUG : print "Hosts restored !"
         return 1
 
     def countLine(self, nf, fdl='\n', tbuf=16384):
