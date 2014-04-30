@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 # http get
-import urllib
+#import urllib
 import urllib2
 # regex
 import re
@@ -183,8 +183,6 @@ class Sysadsblock():
         hostsFile.close()
         shutil.copyfile(self.config["appHosts"], self.config["etcHost"])
         if settings.DEBUG : print "OK"     
-        #if settings.DEBUG : print self.if settings.DEBUG : printCountLines()
-        #self.labelDynamic = wx.StaticText(self.panelButton, 1, self.if settings.DEBUG : printCountLines(), style = wx.ALIGN_CENTRE)
         return 0
 
     def no_ads(self):
@@ -227,7 +225,6 @@ class Sysadsblock():
                 hostsFile.write(el + "\n")
         hostsFile.close()
         shutil.copyfile(self.config["appHosts"], self.config["etcHost"])
-        #if settings.DEBUG : print self.if settings.DEBUG : printCountLines()
         if settings.DEBUG : print "Hosts restored !"
         return 1
 

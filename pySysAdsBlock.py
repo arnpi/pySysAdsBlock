@@ -1,15 +1,11 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 import os, sys
-
 import settings
 import time
 import sysAdsBlock
 
-
-
-
-print str(sys.argv)
+if settings.DEBUG : print  str(sys.argv)
 
 def help():
     print """

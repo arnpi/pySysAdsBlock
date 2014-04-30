@@ -43,7 +43,7 @@ class MainWindow(wx.Frame):
         self.panelButton = wx.Panel(self, 1)
         self.panelText = wx.Panel(self, 1)
                 
-        print "Création de l'interface"
+        if settings.DEBUG : print "Création de l'interface"
         self.buttons1 = wx.Button(self.panelButton, 1, 'Remove blacklist', (-1,-1))
         self.buttons2 = wx.Button(self.panelButton, 2, 'Add blacklist', (-1,-1))
         self.buttons3 = wx.Button(self.panelButton, 3, 'Quit', (-1,-1))
@@ -59,7 +59,7 @@ class MainWindow(wx.Frame):
         self.Bind(wx.EVT_BUTTON, self.yes_ads, id=1)
         self.Bind(wx.EVT_BUTTON, self.no_ads, id=2)
         self.Bind(wx.EVT_BUTTON, self.close_app, id=3)
-        print "Création de la barre de statut"
+        if settings.DEBUG : print "Création de la barre de statut"
         self.txtStatusBar = self.CreateStatusBar()
         self.txtStatusBar.SetStatusText(u"Waiting action ...")
         
@@ -71,7 +71,7 @@ class MainWindow(wx.Frame):
         self.frameSizer.SetSizeHints(self)
         self.labelDynamic.SetLabel(self.printCountLines())
         #self.SetSizeHints(self.GetSize().x,self.GetSize().y,self.GetSize().x,self.GetSize().y );
-        print "Icone systray"
+        if settings.DEBUG : print "Icone systray"
         self.icoSystray = wx.TaskBarIcon()
         self.SetIcon(settings.ICON.GetIcon())
         self.icoSystray.SetIcon(settings.ICON.GetIcon())
@@ -95,11 +95,11 @@ class MainWindow(wx.Frame):
         self.Destroy()
 
     def on_right_down(self, event):
-        print "Clique droit"
+        if settings.DEBUG : print "Clique droit"
         self.PopupMenu(self.icoSystraymenu)
 
     def on_left_down(self, event):
-        print "Clique gauche"
+        if settings.DEBUG : print "Clique gauche"
         if self.hideStatut == False:
             self.Hide()
             self.hideStatut = True
@@ -108,11 +108,11 @@ class MainWindow(wx.Frame):
             self.hideStatut = False
         
     def visit(self):
-        print "visiting ", settings.PROVIDER
+        if settings.DEBUG : print "visiting ", settings.PROVIDER
 
 
     def close_app(self, event):
-        print "close_app()"
+        if settings.DEBUG : print "close_app()"
         exit()
 
     def printCountLines(self):
@@ -126,7 +126,7 @@ class MainWindow(wx.Frame):
         exit()
         
     def yes_ads(self, event):
-        print "yesads"
+        if settings.DEBUG : print "yesads"
         self.txtStatusBar.SetStatusText(u"Reinit hosts file ...")
         resultYes = self.sab.yes_ads()
         if resultYes == 1:
@@ -136,7 +136,7 @@ class MainWindow(wx.Frame):
         self.labelDynamic.SetLabel(self.printCountLines())
         
     def no_ads(self, event):
-        print "noads"
+        if settings.DEBUG : print "noads"
         self.labelDynamic.SetLabel( "Please wait ...")
         self.txtStatusBar.SetStatusText(u"Dl from " + settings.PROVIDER[settings.DEFAULT_PROVIDER] + " ...")
         resultNo = self.sab.no_ads()
