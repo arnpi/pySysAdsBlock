@@ -1,23 +1,9 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-# http get
-#import urllib
-import urllib2
-# regex
-import re
-# date
-import time
-# test file exist
-import os
-# Detect OS
-import platform
-# copy file
-import shutil
-# import ui.py QT4 GUI
-import sys
+
+import urllib2, re, time, os, sys, platform, shutil
 
 import settings
-
 
 class Sysadsblock():
 

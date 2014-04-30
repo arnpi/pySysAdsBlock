@@ -1,9 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-import os, sys
+import os, sys, time
 
 import settings
-import time
 import sysAdsBlock
 
 def runCli(arg):

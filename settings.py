@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
+
 from wx.lib.embeddedimage import PyEmbeddedImage
 
 VERSION = '0.3'
@@ -26,6 +27,7 @@ B1/Fv7llXpxalOfyqS/fXhqZ0MFXiq+U66w3YFyep5Mw5iWVJ4XCRL/ehA5eI+BR0eISZCZLAyYm
 CmUkAP2XR3EAt23AwESRMNEHyDWPkkou23BHBqaZyBdN3ttUUqGPOYE7NqAzIZNSblW5xVQncIC/
 yQ9ry9ss54UAAAAASUVORK5CYII=
 """)
+
 #DEBUG = True
 DEBUG = False
 

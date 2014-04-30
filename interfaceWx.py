@@ -24,14 +24,11 @@
 # Questions reponses sur le hosts file -> "http://doc.ubuntu-fr.org/hosts"
 
 
-import wx
-from wx.lib.embeddedimage import PyEmbeddedImage
-import base64
-import time
-import os
+import wx, time, os
 
 import settings
 import sysAdsBlock
+
 class MainWindow(wx.Frame):
     def __init__(self, parent, title):
         self.sab = sysAdsBlock.Sysadsblock()
@@ -117,8 +114,6 @@ class MainWindow(wx.Frame):
 
     def printCountLines(self):
         lastModification = time.ctime(os.stat(self.sab.config["etcHost"]).st_mtime)
-        #lastModification = time.strptime(lastModification, "%a %b %d %H:%M:%S %Y")
-        #lastModification = time.strftime("%Y%m%d-%H%M%S", lastModification) 
         txtCount = "Actually the "  +  self.sab.config["etcHost"] + " file contains " + str(self.sab.countLine(self.sab.config["etcHost"])) + " lines.\n" + lastModification
         return txtCount
         
