@@ -160,7 +160,7 @@ class Sysadsblock():
             matchRegexComment = regexComment.search(ligne)
             if matchRegexIpLocal:
                 if ligne not in baseHostsArray:
-                    #ligne = ligne.replace("127.0.0.1","127.0.0.2")
+                    ligne = ligne.replace("127.0.0.1", settings.IP_REDIRECTION)
                     hostsFile.write(ligne + "\n")
             else:
                 if matchRegexComment:
