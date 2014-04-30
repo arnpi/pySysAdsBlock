@@ -5,7 +5,7 @@ pySysAdsBlock
 
 This program will add http://someonewhocares.org/hosts/hosts to your /etc/hosts file.
 
-All hosts in the file will go to 127.0.0.1 (If your Apache server is listening this IP, you should change this)
+All hosts in the file will go to 127.0.0.1 (If your Apache server is listening this IP, you should change this ...)
 
 Works in command line or gui and systray icon.
 
@@ -44,4 +44,9 @@ How to use
 Settings
 ========
 
-You can change the hostfile provider in settings.py
+You can change the hostfile provider in settings.py: It's a Python list, you can add several provider and choose the default one with DEFAULT_PROVIDER variable:
+
+PROVIDER = ["http://someonewhocares.org/hosts/hosts"]
+
+DEFAULT_PROVIDER = 0
+
