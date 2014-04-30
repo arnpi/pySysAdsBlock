@@ -1,11 +1,11 @@
 pySysAdsBlock
-===========
+============
 
 *System ads block*
 
 This program will add http://someonewhocares.org/hosts/hosts to your /etc/hosts file.
 
-Works in command line or gui.
+Works in command line or gui and systray icon.
 
 
 Needs root user.
@@ -16,8 +16,9 @@ https://www.python.org/download/releases/2.7.6/
 http://www.wxpython.org/download.php
 
 Debian install
+==============
 
-apt-get install python-wxgtk2.8 (if you wish gui interface)
+apt-get install python-wxgtk2.8 (only if you wish the gui interface)
 
 chmod +x pySysAdsBlock.py
 
@@ -32,4 +33,3 @@ chmod +x pySysAdsBlock.py
 * "./pySysAdsBlock.py block" add the blacklist to your /etc/hosts
 * "./pySysAdsBlock.py status" print your /etc/hosts count lines
 * "./pySysAdsBlock.py wx" will start the default interface (wXpython)
-(On Debian needs python-wxgtk2.8)
