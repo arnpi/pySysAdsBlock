@@ -6,8 +6,8 @@ from wx.lib.embeddedimage import PyEmbeddedImage
 VERSION = '0.3'
 PROGRAM_NAME = "pySysAdsBlock " + VERSION
 PROVIDER = ["http://someonewhocares.org/hosts/hosts"]
-PING_SITE = "google.com"
 DEFAULT_PROVIDER = 0
+PING_SITE = "google.com"
 ICON = PyEmbeddedImage("""
 iVBORw0KGgoAAAANSUhEUgAAACAAAAAlCAYAAAAjt+tHAAADa0lEQVRYhbWXT0gUURzHP7Ot26Zm
 FiGViAq1G6FZ9I8sAmutS2UG1Skt6dAhkAiCIPoDUrfCW0QUBh2isqI6xEq3tBIJyaDdPGRhhZa1
