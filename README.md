@@ -7,6 +7,10 @@ This program will add http://someonewhocares.org/hosts/hosts to your /etc/hosts 
 
 Works in command line or gui and systray icon.
 
+You can revert this operation.
+
+You can keep, add or modify /etc/hosts lines before the marker "# - - - S T O P - E D I T - H E R E - - - #"
+
 
 Needs root user.
 
