@@ -58,4 +58,4 @@ DEFAULT_PROVIDER = 0
 
 *Change the IP 127.0.0.1 to another:*
 
-IP_REDIRECTION = "127.0.0.0"
+IP_REDIRECTION = "127.0.0.1"
