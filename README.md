@@ -34,3 +34,8 @@ How to use
 * "./pySysAdsBlock.py block" add the blacklist to your /etc/hosts
 * "./pySysAdsBlock.py status" print your /etc/hosts count lines
 * "./pySysAdsBlock.py wx" will start the default interface (wXpython)
+
+Settings
+========
+
+You can change the hostfile provider in settings.py
