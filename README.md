@@ -14,4 +14,4 @@ apt-get install python-wxgtk2.8
 
 chmod +x pySysAdsBlock.py
 
-pySysAdsBlock.py help
+./pySysAdsBlock.py help
