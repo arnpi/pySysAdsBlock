@@ -25,7 +25,8 @@ chmod +x pySysAdsBlock.py
 ./pySysAdsBlock.py help
 
 
-
+How to use
+==========
 
 * Launch the script without argument  start help
 * "./pySysAdsBlock.py help" start this help
