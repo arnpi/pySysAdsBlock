@@ -10,10 +10,8 @@ http://www.wxpython.org/download.php
 
 debian install
 
-apt-get install gksu
-
 apt-get install python-wxgtk2.8
 
 chmod +x pySysAdsBlock.py
 
-gksu pySysAdsBlock.py
+pySysAdsBlock.py help
