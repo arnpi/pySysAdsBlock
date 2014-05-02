@@ -23,7 +23,11 @@ def help():
     """
     
 if len(sys.argv) == 1:
-        help()
+        import interfaceWx
+        from wx.lib.embeddedimage import PyEmbeddedImage
+        app = interfaceWx.wx.App(False)
+        frame = interfaceWx.MainWindow(None, settings.PROGRAM_NAME)
+        app.MainLoop()
 elif len(sys.argv) == 2:
     if sys.argv[1] == "allow":
         print "RESTORE THE /etc/hosts"

@@ -32,27 +32,32 @@ import sysAdsBlock
 class MainWindow(wx.Frame):
     def __init__(self, parent, title):
         self.sab = sysAdsBlock.Sysadsblock()
-        wx.Frame.__init__(self, parent, title=title, size=(400,300))
-        self.frameSizer = wx.BoxSizer(wx.VERTICAL)
-        self.gridSizer = wx.GridSizer(5, 2, 0, 0)
+        wx.Frame.__init__(self, parent, title=title, size=(-1,-1))
+        self.frameSizerVert = wx.BoxSizer(wx.VERTICAL)
+        self.frameSizerHori1 = wx.BoxSizer(wx.HORIZONTAL)
+        self.frameSizerHori2 = wx.BoxSizer(wx.HORIZONTAL)
+        self.gridSizer = wx.GridSizer(1, 1, 0, 0)
         self.gridSizerButton = wx.GridSizer(1, 3, 0, 0)
-        self.gridSizerText = wx.GridSizer(4, 1, 0, 0)
+        self.gridSizerText = wx.GridSizer(1, 1, 0, 0)
         self.panelButton = wx.Panel(self, 1)
         self.panelText = wx.Panel(self, 1)
                 
         if settings.DEBUG : print "Création de l'interface"
+        self.gridSizer.Add(self.gridSizerButton, 0, wx.CENTRE)
+        self.gridSizer.Add(self.gridSizerText, 0, wx.CENTRE)
+                
         self.buttons1 = wx.Button(self.panelButton, 1, 'Remove blacklist', (-1,-1))
         self.buttons2 = wx.Button(self.panelButton, 2, 'Add blacklist', (-1,-1))
         self.buttons3 = wx.Button(self.panelButton, 3, 'Quit', (-1,-1))
-        self.labelDynamic = wx.StaticText(self.panelText, 1, "Choose action", style = wx.ALIGN_LEFT, size = (-1,-1))
+        self.labelDynamic = wx.TextCtrl(self.panelText, 1, "Choose action", size = (380,40), style= wx.TE_MULTILINE |  wx.ALIGN_LEFT)
         self.labelFixe = wx.StaticText(self.panelText, 2, title + " GPL", style = wx.ALIGN_LEFT, size = (-1,-1))
-        self.gridSizer.Add(self.gridSizerButton, 0, wx.ALIGN_CENTRE)
-        self.gridSizer.Add(self.gridSizerText, 0, wx.ALIGN_CENTRE)
-        self.gridSizerButton.Add(self.buttons1, 0, wx.ALIGN_LEFT)
-        self.gridSizerButton.Add(self.buttons2, 0, wx.ALIGN_LEFT)
-        self.gridSizerButton.Add(self.buttons3, 0, wx.ALIGN_RIGHT)
-        self.gridSizerText.Add(self.labelDynamic, 0, wx.ALIGN_LEFT)
-        self.gridSizerText.Add(self.labelFixe, 0, wx.ALIGN_RIGHT)
+        
+        self.gridSizerButton.Add(self.buttons1, 1, wx.ALIGN_LEFT)
+        self.gridSizerButton.Add(self.buttons2, 2, wx.ALIGN_LEFT)
+        self.gridSizerButton.Add(self.buttons3, 3, wx.ALIGN_RIGHT)
+        self.gridSizerText.Add(self.labelDynamic, 1, wx.ALIGN_LEFT)
+        self.gridSizerText.Add(self.labelFixe, 2, wx.ALIGN_RIGHT)
+
         self.Bind(wx.EVT_BUTTON, self.yes_ads, id=1)
         self.Bind(wx.EVT_BUTTON, self.no_ads, id=2)
         self.Bind(wx.EVT_BUTTON, self.close_app, id=3)
@@ -62,12 +67,14 @@ class MainWindow(wx.Frame):
         
         self.panelButton.SetSizer(self.gridSizerButton)
         self.panelText.SetSizer(self.gridSizerText)
-        self.frameSizer.Add(self.panelButton, 1, wx.EXPAND)
-        self.frameSizer.Add(self.panelText, 1, wx.EXPAND)
-        self.SetSizer(self.frameSizer)
-        self.frameSizer.SetSizeHints(self)
-        self.labelDynamic.SetLabel(self.printCountLines())
-        #self.SetSizeHints(self.GetSize().x,self.GetSize().y,self.GetSize().x,self.GetSize().y );
+        self.frameSizerVert.Add(self.frameSizerHori2, 1, wx.EXPAND)
+        self.frameSizerVert.Add(self.frameSizerHori1, 1, wx.EXPAND)
+        self.frameSizerHori1.Add(self.panelButton, 1, wx.EXPAND)
+        self.frameSizerHori2.Add(self.panelText, 1, wx.EXPAND)
+        self.SetSizer(self.frameSizerVert)
+        self.frameSizerVert.SetSizeHints(self)
+        self.labelDynamic.SetValue(self.printCountLines())
+        self.SetSizeHints(self.GetSize().x,self.GetSize().y,self.GetSize().x,self.GetSize().y );
         if settings.DEBUG : print "Icone systray"
         self.icoSystray = wx.TaskBarIcon()
         self.SetIcon(settings.ICON.GetIcon())
@@ -82,8 +89,8 @@ class MainWindow(wx.Frame):
         self.icoSystraymenu.Bind(wx.EVT_MENU, self.yes_ads, id=1)
         self.icoSystraymenu.Bind(wx.EVT_MENU, self.no_ads, id=2)
         
-        #self.hideStatut = True
-        self.hideStatut = False
+        self.hideStatut = True
+        #self.hideStatut = False
         self.Show()
         self.Bind(wx.EVT_CLOSE, self.on_close)
         
@@ -128,11 +135,11 @@ class MainWindow(wx.Frame):
             self.txtStatusBar.SetStatusText(u"Hosts restored !")
         else:
             self.txtStatusBar.SetStatusText(u"Error not restored !")
-        self.labelDynamic.SetLabel(self.printCountLines())
+        self.labelDynamic.SetValue(self.printCountLines())
         
     def no_ads(self, event):
         if settings.DEBUG : print "noads"
-        self.labelDynamic.SetLabel( "Please wait ...")
+        self.labelDynamic.SetValue( "Please wait ...")
         self.txtStatusBar.SetStatusText(u"Dl from " + settings.PROVIDER[settings.DEFAULT_PROVIDER] + " ...")
         resultNo = self.sab.no_ads()
         if resultNo == 1:
@@ -143,6 +150,6 @@ class MainWindow(wx.Frame):
             self.txtStatusBar.SetStatusText(u"Network error")
         else:
             self.txtStatusBar.SetStatusText(u"WTF ??")
-        self.labelDynamic.SetLabel(self.printCountLines())
+        self.labelDynamic.SetValue(self.printCountLines())
             
 
