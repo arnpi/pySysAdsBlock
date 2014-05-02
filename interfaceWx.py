@@ -88,11 +88,21 @@ class MainWindow(wx.Frame):
         self.icoSystraymenu.Bind(wx.EVT_MENU, self.close_app, id=wx.ID_EXIT)
         self.icoSystraymenu.Bind(wx.EVT_MENU, self.yes_ads, id=1)
         self.icoSystraymenu.Bind(wx.EVT_MENU, self.no_ads, id=2)
-        
+        self.buttons2.SetFocus()
         self.hideStatut = True
         #self.hideStatut = False
         self.Show()
         self.Bind(wx.EVT_CLOSE, self.on_close)
+        randomId = wx.NewId()
+        self.Bind(wx.EVT_MENU, self.onKeyCombo, id=randomId)
+        accel_tbl = wx.AcceleratorTable([(wx.ACCEL_CTRL,  ord('Q'), randomId )])
+        self.SetAcceleratorTable(accel_tbl)
+
+    def onKeyCombo(self, event):
+        """"""
+        if settings.DEBUG : print "You pressed CTRL+Q!"
+        if settings.DEBUG : print "close_app()"
+        exit()
         
     def on_close(self, event):
         exit()
