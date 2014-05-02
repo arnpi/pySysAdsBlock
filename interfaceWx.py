@@ -50,13 +50,13 @@ class MainWindow(wx.Frame):
         self.buttons2 = wx.Button(self.panelButton, 2, 'Add blacklist', (-1,-1))
         self.buttons3 = wx.Button(self.panelButton, 3, 'Quit', (-1,-1))
         self.labelDynamic = wx.TextCtrl(self.panelText, 1, "Choose action", size = (380,40), style= wx.TE_MULTILINE |  wx.ALIGN_LEFT)
-        self.labelFixe = wx.StaticText(self.panelText, 2, title + " GPL", style = wx.ALIGN_LEFT, size = (-1,-1))
+#        self.labelFixe = wx.StaticText(self.panelText, 2, title + " GPL", style = wx.ALIGN_LEFT, size = (-1,-1))
         
         self.gridSizerButton.Add(self.buttons1, 1, wx.ALIGN_LEFT)
         self.gridSizerButton.Add(self.buttons2, 2, wx.ALIGN_LEFT)
         self.gridSizerButton.Add(self.buttons3, 3, wx.ALIGN_RIGHT)
         self.gridSizerText.Add(self.labelDynamic, 1, wx.ALIGN_LEFT)
-        self.gridSizerText.Add(self.labelFixe, 2, wx.ALIGN_RIGHT)
+#        self.gridSizerText.Add(self.labelFixe, 2, wx.ALIGN_RIGHT)
 
         self.Bind(wx.EVT_BUTTON, self.yes_ads, id=1)
         self.Bind(wx.EVT_BUTTON, self.no_ads, id=2)
