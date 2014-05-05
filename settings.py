@@ -4,7 +4,8 @@
 from wx.lib.embeddedimage import PyEmbeddedImage
 
 VERSION = '0.3'
-PROGRAM_NAME = "pySysAdsBlock " + VERSION
+PROGRAM_NAME = "pySysAdsBlock"
+FULL_PROGRAM_NAME = PROGRAM_NAME + " " + VERSION
 PROVIDER = ["http://someonewhocares.org/hosts/hosts"]
 DEFAULT_PROVIDER = 0
 PING_SITE = "google.com"

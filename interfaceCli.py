@@ -5,7 +5,7 @@ import os, sys, time
 import settings
 import sysAdsBlock
 
-def runCli(arg):
+def run(arg):
     if arg == "allow":
         print "RESTORE THE /etc/hosts"
         sab = sysAdsBlock.Sysadsblock()

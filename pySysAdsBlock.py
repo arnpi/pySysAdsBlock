@@ -1,57 +1,37 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-import os, sys, time
 
+import os, sys, time
+import argparse
 import settings
 import sysAdsBlock
 
 if settings.DEBUG : print  str(sys.argv)
 
-def help():
-    print """
-    This program needs root privileges\n
-    (e.g. sudo ./pySysAdsBlock.py [argument])\n
-    Depend python\n
-    * Launch the script without argument  start this help\n
-    * "./pySysAdsBlock.py help" start this help\n
-    * "./pySysAdsBlock.py allow" restore your /etc/hosts file\n
-    * "./pySysAdsBlock.py block" add the blacklist to your /etc/hosts\n
-    * "./pySysAdsBlock.py status" print your /etc/hosts count lines\n
-    * "./pySysAdsBlock.py wx" will start the default interface (wXpython)\n
-    (On Debian needs python-wxgtk2.8)\n
-    * "./pySysAdsBlock.py gtk" will start the gtk interface (not implemented yet)\n
-    """
-    
-if len(sys.argv) == 1:
+
+parser = argparse.ArgumentParser(description='Add a blacklist to your hosts file.')
+parser.add_argument('-g', '--gui', help="GUI interface, default value: wx (wxpython)",nargs='?', const="wx", choices=["wx", "gtk", "qt"] )
+parser.add_argument('-v', "--verbosity", help="increase output verbosity", nargs=1, choices=['0', '1'])
+#parser.add_argument('-c', '--cli', help="Command line action", nargs=1, choices=['status', 'allow', 'block'])
+parser.add_argument('-c', '--cli', help="Command line action", nargs=1, choices=['status', 'allow', 'block'])
+
+args = parser.parse_args()
+
+print(args)
+if args.verbosity:
+    print "verbosity turned on"
+if args.cli:
+    print args.cli
+    import interfaceCli
+    interfaceCli.run(args.cli[0])
+elif args.gui:
+    if args.gui == "wx":
         import interfaceWx
-        from wx.lib.embeddedimage import PyEmbeddedImage
-        app = interfaceWx.wx.App(False)
-        frame = interfaceWx.MainWindow(None, settings.PROGRAM_NAME)
-        app.MainLoop()
-elif len(sys.argv) == 2:
-    if sys.argv[1] == "allow":
-        print "RESTORE THE /etc/hosts"
-        import interfaceCli
-        interfaceCli.runCli("allow")
-    elif sys.argv[1] == "block":
-        print "BLOCK BAD SITE"
-        import interfaceCli
-        interfaceCli.runCli("block")
-    elif sys.argv[1] == "status":
-        print "STATUS /etc/hosts/"
-        import interfaceCli
-        interfaceCli.runCli("status")
-    elif sys.argv[1] == "wx":
-        import interfaceWx
-        from wx.lib.embeddedimage import PyEmbeddedImage
-        app = interfaceWx.wx.App(False)
-        frame = interfaceWx.MainWindow(None, settings.PROGRAM_NAME)
-        app.MainLoop()
-    elif sys.argv[1] == "gtk":
-        print "GTK interface not done"
-    elif sys.argv[1] == "help":
-        help()
-    else:
-        help()
-else:
-        help()
+        interfaceWx.run() 
+    elif args.gui == "gtk":
+        print "GTK GUI not done"
+    elif args.gui == "qt":
+        print "QT GUI not done"
+exit()
+
+

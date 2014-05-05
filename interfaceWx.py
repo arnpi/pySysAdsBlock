@@ -29,6 +29,12 @@ import wx, time, os
 import settings
 import sysAdsBlock
 
+def run():
+    from wx.lib.embeddedimage import PyEmbeddedImage
+    app = wx.App(False)
+    frame = MainWindow(None, settings.PROGRAM_NAME)
+    app.MainLoop()
+
 class MainWindow(wx.Frame):
     def __init__(self, parent, title):
         self.sab = sysAdsBlock.Sysadsblock()
