@@ -12,7 +12,6 @@ if settings.DEBUG : print  str(sys.argv)
 parser = argparse.ArgumentParser(description='Add a blacklist to your hosts file.')
 parser.add_argument('-g', '--gui', help="GUI interface, default value: wx (wxpython)",nargs='?', const="wx", choices=["wx", "gtk", "qt"] )
 parser.add_argument('-v', "--verbosity", help="increase output verbosity", nargs=1, choices=['0', '1'])
-#parser.add_argument('-c', '--cli', help="Command line action", nargs=1, choices=['status', 'allow', 'block'])
 parser.add_argument('-c', '--cli', help="Command line action", nargs=1, choices=['status', 'allow', 'block'])
 
 args = parser.parse_args()
