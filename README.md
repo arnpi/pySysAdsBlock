@@ -41,11 +41,7 @@ How to use
 ==========
 
 * Launch the script without argument  start wxPython interface
-* "./pySysAdsBlock.py help" start this help
-* "./pySysAdsBlock.py allow" restore your /etc/hosts file
-* "./pySysAdsBlock.py block" add the blacklist to your /etc/hosts
-* "./pySysAdsBlock.py status" print your /etc/hosts count lines
-* "./pySysAdsBlock.py wx" will start the GUI interface (WxPython)
+* "./pySysAdsBlock.py -h" start help
 
 Settings
 ========
