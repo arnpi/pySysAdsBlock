@@ -34,14 +34,12 @@ cd pySysAdsBlock
 
 chmod +x pySysAdsBlock.py
 
-./pySysAdsBlock.py help
-
-
 How to use
 ==========
 
-* Launch the script without argument  start wxPython interface
-* "./pySysAdsBlock.py -h" start help
+Start help typing:
+
+* "./pySysAdsBlock.py -h" 
 
 Settings
 ========
