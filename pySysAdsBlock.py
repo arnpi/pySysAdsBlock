@@ -23,22 +23,20 @@
 #
 # Questions reponses sur le hosts file -> "http://doc.ubuntu-fr.org/hosts"
 
-
-import os, sys, time
+import sys
 import argparse
 import settings
-import sysAdsBlock
 
-if settings.DEBUG : print  str(sys.argv)
+if settings.DEBUG:
+    print str(sys.argv)
 
 parser = argparse.ArgumentParser(description='Add a blacklist to your hosts file.')
-parser.add_argument('-g', '--gui', help="GUI interface, default value: wx (wxpython)",nargs='?', const="wx", choices=["wx", "gtk", "qt"] )
-#parser.add_argument('-v', "--verbosity", help="increase output verbosity", nargs=1, choices=['0', '1'])
+parser.add_argument('-g', '--gui', help="GUI interface, default value: wx (wxpython)", nargs='?', const="wx", choices=["wx", "gtk", "qt"])
 parser.add_argument('-c', '--cli', help="Command line action", nargs=1, choices=['status', 'allow', 'block'])
 
 args = parser.parse_args()
 
-#if args.verbosity:
+# if args.verbosity:
 #    print "verbosity turned on"
 if args.cli:
     import interfaceCli
@@ -46,10 +44,9 @@ if args.cli:
 elif args.gui:
     if args.gui == "wx":
         import interfaceWx
-        interfaceWx.run() 
+        interfaceWx.run()
     elif args.gui == "gtk":
         print "GTK GUI not done"
     elif args.gui == "qt":
         print "QT GUI not done"
 exit()
-
