@@ -247,6 +247,17 @@ class Sysadsblock():
             print "Hosts restored !"
         return 1
 
+    def check_is_no_ads(self):
+        if settings.DEBUG:
+            print "check_is_no_ads()"
+        baseHostsFile = open(self.config["etcHost"], "r")
+        baseHostsFile = baseHostsFile.read()
+        baseHostsFile = baseHostsFile.split("\n")
+        if "# - - - S T O P - E D I T - H E R E - - - #" in baseHostsFile:
+            return 1
+        else:
+            return 0
+
     def countLine(self, nf, fdl='\n', tbuf=16384):
         """Compte le nombre de lignes du fichier nf"""
         c = 0
