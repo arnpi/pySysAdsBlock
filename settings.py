@@ -10,7 +10,7 @@ PROVIDER = ["http://someonewhocares.org/hosts/hosts"]
 DEFAULT_PROVIDER = 0
 PING_SITE = "google.com"
 IP_REDIRECTION = "127.0.0.1"
-PORT_NUMBER = 80 # For the mini http server
+PORT_NUMBER = 80  # For the mini http server
 ICON = PyEmbeddedImage("""
 iVBORw0KGgoAAAANSUhEUgAAACAAAAAlCAYAAAAjt+tHAAADa0lEQVRYhbWXT0gUURzHP7Ot26Zm
 FiGViAq1G6FZ9I8sAmutS2UG1Skt6dAhkAiCIPoDUrfCW0QUBh2isqI6xEq3tBIJyaDdPGRhhZa1

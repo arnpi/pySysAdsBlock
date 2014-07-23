@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-#  pySysAdsBlock.py
+# pySysAdsBlock.py
 #
 #  07/27/2013
 #  Copyright 2013 arnpi <arnpi@gmx.com>
@@ -31,7 +31,8 @@ if settings.DEBUG:
     print str(sys.argv)
 
 parser = argparse.ArgumentParser(description='Add a blacklist to your hosts file.')
-parser.add_argument('-g', '--gui', help="GUI interface, default value: wx (wxpython)", nargs='?', const="wx", choices=["wx", "gtk", "qt"])
+parser.add_argument('-g', '--gui', help="GUI interface, default value: wx (wxpython)", nargs='?', const="wx",
+                    choices=["wx", "gtk", "qt"])
 parser.add_argument('-c', '--cli', help="Command line action", nargs=1, choices=['status', 'allow', 'block'])
 
 args = parser.parse_args()
@@ -40,10 +41,12 @@ args = parser.parse_args()
 #    print "verbosity turned on"
 if args.cli:
     import interfaceCli
+
     interfaceCli.run(args.cli[0])
 elif args.gui:
     if args.gui == "wx":
         import interfaceWx
+
         interfaceWx.run()
     elif args.gui == "gtk":
         print "GTK GUI not done"

@@ -10,6 +10,7 @@ import webServer
 import settings
 import sysAdsBlock
 
+
 def run():
     app = wx.App(False)
     MainWindow(None, settings.PROGRAM_NAME)
@@ -17,52 +18,42 @@ def run():
 
 
 class MainWindow(wx.Frame):
-
     def __init__(self, parent, title):
         self.sab = sysAdsBlock.Sysadsblock()
-        wx.Frame.__init__(self, parent, title=title, size=(-1, -1))
-        self.frameSizerVert = wx.BoxSizer(wx.VERTICAL)
-        self.frameSizerHori1 = wx.BoxSizer(wx.HORIZONTAL)
-        self.frameSizerHori2 = wx.BoxSizer(wx.HORIZONTAL)
-        self.gridSizer = wx.GridSizer(1, 1, 0, 0)
-        self.gridSizerButton = wx.GridSizer(1, 3, 0, 0)
-        self.gridSizerText = wx.GridSizer(1, 1, 0, 0)
-        self.panelButton = wx.Panel(self, 1)
-        self.panelText = wx.Panel(self, 1)
+        wx.Frame.__init__(self, parent, title=title, size=(400, 150))
 
         if settings.DEBUG:
             print "Création de l'interface"
-        self.gridSizer.Add(self.gridSizerText, 0, wx.TOP)
-        self.gridSizer.Add(self.gridSizerButton, 0, wx.BOTTOM)
+        self.panel = wx.Panel(self, -1)
+        self.box = wx.BoxSizer(wx.VERTICAL)
+        self.sub_box = wx.BoxSizer(wx.HORIZONTAL)
 
-        self.buttons1 = wx.Button(self.panelButton, 1, 'Remove blacklist', (-1, -1))
-        self.buttons2 = wx.Button(self.panelButton, 2, 'Add blacklist', (-1, -1))
-        self.buttons3 = wx.Button(self.panelButton, 3, 'Quit', (-1, -1))
-        self.labelDynamic = wx.TextCtrl(self.panelText, 1, "Choose action", size=(380, -1), style= wx.TE_MULTILINE | wx.ALIGN_LEFT)
-        self.labelDynamic2 = wx.TextCtrl(self.panelText, 2, " ", size=(380, -1), style= wx.TE_MULTILINE | wx.ALIGN_LEFT)
-        self.gridSizerText.Add(self.labelDynamic, 1, wx.ALIGN_LEFT)
-        self.gridSizerText.Add(self.labelDynamic2, 1, wx.ALIGN_LEFT)
-
-        self.gridSizerButton.Add(self.buttons1, 1, wx.ALIGN_LEFT)
-        self.gridSizerButton.Add(self.buttons2, 1, wx.ALIGN_LEFT)
-        self.gridSizerButton.Add(self.buttons3, 1, wx.ALIGN_RIGHT)
+        self.buttons1 = wx.Button(self.panel, 1, 'Remove blacklist')
+        self.buttons2 = wx.Button(self.panel, 2, 'Add blacklist')
+        self.buttons3 = wx.Button(self.panel, 3, 'Minimize')
+        self.buttons4 = wx.Button(self.panel, 4, 'Quit')
+        self.labelDynamic = wx.TextCtrl(self.panel, 1, "Choose action", size=(380, -1),
+                                        style=wx.TE_MULTILINE | wx.ALIGN_LEFT)
+        self.labelDynamic2 = wx.TextCtrl(self.panel, 2, " ", size=(380, -1), style=wx.TE_MULTILINE | wx.ALIGN_LEFT)
+        self.box.Add(self.labelDynamic, 1)
+        self.box.Add(self.labelDynamic2, 1)
+        self.sub_box.Add(self.buttons1, 1, wx.EXPAND | wx.ALL, 3)
+        self.sub_box.Add(self.buttons2, 1, wx.EXPAND | wx.ALL, 3)
+        self.sub_box.Add(self.buttons3, 1, wx.EXPAND | wx.ALL, 3)
+        self.sub_box.Add(self.buttons4, 1, wx.EXPAND | wx.ALL, 3)
+        self.box.Add(self.sub_box, 1, wx.EXPAND | wx.ALL, 3)
+        self.panel.SetSizer(self.box)
+        self.Centre()
 
         self.Bind(wx.EVT_BUTTON, self.yes_ads, id=1)
         self.Bind(wx.EVT_BUTTON, self.no_ads, id=2)
-        self.Bind(wx.EVT_BUTTON, self.close_app, id=3)
+        self.Bind(wx.EVT_BUTTON, self.on_left_down, id=3)
+        self.Bind(wx.EVT_BUTTON, self.close_app, id=4)
         if settings.DEBUG:
             print "Création de la barre de statut"
         self.txtStatusBar = self.CreateStatusBar()
         self.txtStatusBar.SetStatusText(u"Waiting action ...")
 
-        self.panelButton.SetSizer(self.gridSizerButton)
-        self.panelText.SetSizer(self.gridSizerText)
-        self.frameSizerVert.Add(self.frameSizerHori2, 1)
-        self.frameSizerVert.Add(self.frameSizerHori1, 1)
-        self.frameSizerHori1.Add(self.panelButton, 1)
-        self.frameSizerHori2.Add(self.panelText, 1)
-        self.SetSizer(self.frameSizerVert)
-        self.frameSizerVert.SetSizeHints(self)
         self.labelDynamic.SetValue(self.printCountLines())
         if settings.DEBUG:
             print "Icone systray"
@@ -135,7 +126,8 @@ class MainWindow(wx.Frame):
 
     def printCountLines(self):
         lastModification = time.ctime(os.stat(self.sab.config["etcHost"]).st_mtime)
-        txtCount = "Actually the " + self.sab.config["etcHost"] + " file contains " + str(self.sab.countLine(self.sab.config["etcHost"])) + " lines.\n" + lastModification
+        txtCount = "Actually the " + self.sab.config["etcHost"] + " file contains " + str(
+            self.sab.countLine(self.sab.config["etcHost"])) + " lines.\n" + lastModification
         return txtCount
 
     def Quit(self, event):
@@ -180,7 +172,7 @@ class MainWindow(wx.Frame):
         print "run_web()"
         print self.sab.check_is_no_ads()
         if self.check_http() == 0 and self.sab.check_is_no_ads():
-            self.a = threading.Thread(None, webServer.run, None) 
+            self.a = threading.Thread(None, webServer.run, None)
             self.a.start()
             self.label_status()
         else:
